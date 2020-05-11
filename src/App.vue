@@ -23,6 +23,13 @@
         <div>
              {{ $store.state.counter }}
         </div>
+        <!-- <router-link to="/">main</router-link> |
+        <router-link to="/sub">sub</router-link> | -->
+        <a href="/"  @click.prevent="history($data, $event)" >main</a> |
+        <a href="/sub"  @click.prevent="history($data, $event)" >sub</a> |
+        <a href="/detail"  @click.prevent="history($data, $event)" >detail</a>
+        <router-view></router-view>
+        <a href="#" @click.prevent="history($data, $event)" >history</a>
     </div>
 </template>
 
@@ -42,18 +49,31 @@ export default {
         return {
             count: 1,
             list: null,
+            random: null,
         };
     },
     beforeCreate: function() {
-        console.log("beforeCreate");
+        // window.onpopstate = function(event) { 
+        //     console.log(JSON.stringify(event.state))
+        //     console.log(this);
+        // };
+        
+        this.$nextTick(function() {
+            if(!history.state) {
+                this.randomFn();
+            } else {
+                console.log(history.state)
+            }
+        });
     },
     created: function() {
         //this.axiosFn();
+        console.log(this.strHistory)
+        
         this.storeFn();
-
         EventBus.$on("bus Test", clickedCount => {
             console.log(clickedCount + "eventBus");
-        })
+        });
     },
     mounted: function() {
         console.log("mounted");
@@ -73,6 +93,11 @@ export default {
             .catch(function (error) {
                 console.log(error);
             });
+        },
+
+        randomFn() {
+            this.random = Math.floor(Math.random() * 10) + 1;
+            console.log(this.random)
         },
 
         storeFn() {
