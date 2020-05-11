@@ -1,7 +1,7 @@
 const commonMixin = {
     data : function() {
         return {
-            strHistory: false,
+            
         }
     },
 

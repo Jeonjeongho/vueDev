@@ -57,12 +57,12 @@ export default {
         //     console.log(JSON.stringify(event.state))
         //     console.log(this);
         // };
-        
+
         this.$nextTick(function() {
-            if(!history.state) {
+            if(!history.state || performance.navigation.type == 1) {
                 this.randomFn();
             } else {
-                console.log(history.state)
+                console.log(history.state);
             }
         });
     },
