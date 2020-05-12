@@ -1,7 +1,9 @@
 <template>
     <div id="app">
         JEON!!!
-        <button @click="scroll">mixin</button>
+        <div ref="refSwiper"></div>
+        <button type="button" @click="pushdom">pushdom</button>
+        <button type="button" @click="scroll">mixin</button>
         <div>
             <input type="number" v-model.number="count" />
         </div>
@@ -50,6 +52,9 @@ export default {
             count: 1,
             list: null,
             random: null,
+            ov: [],
+            ovString: ["A", "B", {}],
+            ovNode: null,
         };
     },
     beforeCreate: function() {
@@ -57,31 +62,51 @@ export default {
         //     console.log(JSON.stringify(event.state))
         //     console.log(this);
         // };
+        
+        // EventBus.$on("historyTest", clickedCount => {
+        //     if(!clickedCount) {
+        //         this.randomFn();
+        //     } else {
+        //         console.log(history.state);
+        //     }
+        // });
 
-        this.$nextTick(function() {
-            if(!history.state || performance.navigation.type == 1) {
-                this.randomFn();
-            } else {
-                console.log(history.state);
-            }
-        });
+        //, [[], [document.createElement("div")]]
     },
     created: function() {
-        //this.axiosFn();
-        console.log(this.strHistory)
-        
         this.storeFn();
-        EventBus.$on("bus Test", clickedCount => {
+        EventBus.$on("busTest", clickedCount => {
             console.log(clickedCount + "eventBus");
         });
+
+        if(!this.getHistory) {
+            this.randomFn();
+        } else {
+            console.log(history.state);
+        }
+        
+        
+        // this.$readyHistory(() => {
+        //     if(!history.state || performance.navigation.type == 1) {
+        //         this.randomFn();
+        //     } else {
+        //         console.log(history.state);
+        //     }
+        // })
     },
     mounted: function() {
-        console.log("mounted");
+        this.pushdom();
+        //console.log("mounted");
     },
     methods: {
         parents(data) {
             console.log(data + "parents");
             this.count = data;
+        },
+
+        pushdom() {
+            this.ov.push(this.$refs["refSwiper"]);
+            this.ovNode = this.$refs["refSwiper"];
         },
 
         axiosFn() {
@@ -115,5 +140,9 @@ export default {
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+
+    li {
+        text-align: left;
+    }
 }
 </style>
