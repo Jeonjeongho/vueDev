@@ -25,6 +25,7 @@ const commonMixin = {
         
 
         history(data, e) {
+            //isArray
             const _data = data;
             _.forEach(_data, (value, key) => {
                 if( typeof value == "object"  && value != null ) {

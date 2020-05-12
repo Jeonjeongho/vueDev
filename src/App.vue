@@ -2,9 +2,11 @@
     <div id="app">
         JEON!!!
         <div ref="refSwiper"></div>
-        <button type="button" @click="pushdom">pushdom</button>
+        <button type="button" @click="pushdom" 
+            :style="true ? 'width:100px' : 'width: 200px;'"
+        >pushdom</button>
         <button type="button" @click="scroll">mixin</button>
-        <div>
+        <div >
             <input type="number" v-model.number="count" />
         </div>
         <common-btn :count="count" @child="parents">
@@ -54,7 +56,7 @@ export default {
             random: null,
             ov: [],
             ovString: ["A", "B", {}],
-            ovNode: null,
+            ovNode: document.createElement("div"),
         };
     },
     beforeCreate: function() {
