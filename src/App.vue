@@ -1,6 +1,20 @@
 <template>
     <div id="app">
         <h1>dev</h1>
+         <!-- <router-link to="/">main</router-link> |
+        <router-link to="/sub">sub</router-link> | -->
+        <a href="/"  @click.prevent="history($data, $event)" >main</a> |
+        <a href="/sub"  @click.prevent="history($data, $event)" >sub</a> |
+        <a href="/detail"  @click.prevent="history($data, $event)" >detail</a>
+        <router-view></router-view>
+
+         <section>
+            <h2>history Test</h2>
+            <div>
+                <strong>{{random}}</strong>random
+            </div>
+        </section>
+
         <section>
              <h2>단어강조</h2>
             <span v-html="searchStart ? getSearchContents( '카드종류 현대 현대카드' , '현대', 'title') : search.TITLE"></span>
@@ -98,12 +112,7 @@
             </div>
         </section>
 
-        <section>
-            <h2>history Test</h2>
-            <div>
-                <strong>{{random}}</strong>random
-            </div>
-        </section>
+       
         
         <section>
             <h2>무한스크롤링 페이징 테스트</h2>
@@ -130,12 +139,7 @@
             </div>
         </div>
        
-        <!-- <router-link to="/">main</router-link> |
-        <router-link to="/sub">sub</router-link> | -->
-        <a href="/"  @click.prevent="history($data, $event)" >main</a> |
-        <a href="/sub"  @click.prevent="history($data, $event)" >sub</a> |
-        <a href="/detail"  @click.prevent="history($data, $event)" >detail</a>
-        <router-view></router-view>
+       
     </div>
 </template>
 
@@ -207,7 +211,7 @@ export default {
         });
 
         if(!this.getHistory) {
-            //this.randomFn();
+            this.randomFn();
         } else {
             console.log(history.state);
             // console.log("history");
