@@ -61,7 +61,7 @@
             <h2>line style 테스트</h2>
             <button type="button" @click="pushdom" 
                 :style="true ? 'width:100px' : 'width: 200px;'"
-            >pushdom</button>
+            >pushdom</button> 
         </section>
 
         <section>
@@ -97,7 +97,7 @@
             <div v-if="list">
                 <ul>
                     <template v-for="(list, index) in list">
-                        <li :key="index + list.node_id">
+                        <li :key="index">
                             {{list.author}}
                         </li>
                     </template>
@@ -273,7 +273,9 @@ export default {
 
         axiosFn() {
             const _this = this;
-            this.$axios.get('https://hn.algolia.com/api/v1/search_by_date?tags=story&page=1')
+            this.$axios.get('https://hn.algolia.com/api/v1/search_by_date?tags=story', {
+                page: 1
+            })
             .then(function (response) {
                _this.list = response.data.hits;
             })
