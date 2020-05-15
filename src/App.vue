@@ -1,6 +1,16 @@
 <template>
     <div id="app">
         JEON!!!
+        <span v-html="searchStart ? getSearchContents( '카드종류 현대 현대카드' , '현대', 'title') : list.TITLE"></span>
+        <button type="button" @click="parentFn">
+            <span>parent</span>
+            <button type="button" @click.stop="childFn">
+                child
+            </button>
+        </button>
+        <input type="checkbox" id="checkbox" v-model="checked">
+        <label for="checkbox">{{ checked }}</label>
+        <input type="text" @keyup.ctrl.67="copy">
         <div ref="refSwiper"></div>
         <button type="button" @click="pushdom" 
             :style="true ? 'width:100px' : 'width: 200px;'"
@@ -93,6 +103,11 @@ export default {
             mainSwiper: null,
             page: 1,
             listInfiniti: [],
+            checked: false,
+            searchStart: true,
+            list: {
+                TITLE : "list TITLE"
+            }
         };
     },
     beforeCreate: function() {
@@ -119,6 +134,7 @@ export default {
                 }
                 //this.randomFn();
             },
+            //immediate: true
         }
     },
     created: function() {
@@ -153,6 +169,23 @@ export default {
         //console.log("mounted");
     },
     methods: {
+
+        getSearchContents(word, filter, type) {
+            const regex = new RegExp(filter,'gi');
+
+            if (type == 'title') {
+                return word.replace(regex, `<strong class='font-point'>${filter}</strong>`);
+                
+            } else {
+                const findIndex = word.indexOf(filter);
+                const startIndex = findIndex - 20 < 0 ? 0 : findIndex - 20;
+                const endIndex = findIndex + 20;
+                const cutWord = word.substring(startIndex, endIndex);
+                return cutWord.replace(regex, `<span class='font-point'>${filter}</span>`);
+            }
+        },
+        
+
         parents(data) {
             console.log(data + "parents");
             this.count = data;
@@ -190,6 +223,18 @@ export default {
 
         storeFn() {
             //console.log(this.$store.dispatch('addCounter'))
+        },
+
+        parentFn() {
+            console.log("parentFn")
+        },
+
+        childFn() {
+            console.log("childFn")
+        },
+
+        copy() {
+            console.log("copy")
         },
         infiniteHandler($state) {
             console.log("infiniteHandler");
