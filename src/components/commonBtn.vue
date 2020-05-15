@@ -1,7 +1,11 @@
 <template>
     <div class="btn">
-        <button @click="countUp">{{ countData }}
-            <slot></slot>
+        <button @click="countUp">
+            <div>
+                {{ countData }}
+            </div>
+            <slot name="header"></slot>header
+            <slot :text="textData"></slot>
         </button>
     </div>
 </template>
@@ -20,6 +24,7 @@ export default {
     data: function() {
         return {
             countData: this.count,
+            textData: "hello from child"
         };
     },
     watch: {

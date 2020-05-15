@@ -1,57 +1,119 @@
 <template>
     <div id="app">
-        JEON!!!
-        <span v-html="searchStart ? getSearchContents( '카드종류 현대 현대카드' , '현대', 'title') : list.TITLE"></span>
-        <button type="button" @click="parentFn">
-            <span>parent</span>
-            <button type="button" @click.stop="childFn">
-                child
-            </button>
-        </button>
-        <input type="checkbox" id="checkbox" v-model="checked">
-        <label for="checkbox">{{ checked }}</label>
-        <input type="text" @keyup.ctrl.67="copy">
-        <div ref="refSwiper"></div>
-        <button type="button" @click="pushdom" 
-            :style="true ? 'width:100px' : 'width: 200px;'"
-        >pushdom</button>
-        <button type="button" @click="scroll">mixin</button>
-        <input type="radio" value="A" v-model="random" >
-        <input type="radio" value="B" v-model="random">
-        <input type="radio" value="C" v-model="random">
-        <input type="radio" value="D" v-model="random">
-        <div >
-            <input type="number" v-model.number="count" />
-        </div>
-        <common-btn :count="count" @child="parents">
-            <div>
-                slot
-            </div>
-        </common-btn>
-        <button type="button" @click="axiosFn">axios</button>
-        <div>
-            <ul>
-                <template v-for="(list, index) in list">
-                    <li :key="index + list.node_id">
-                        {{list.login}}
-                    </li>
-                </template>
-            </ul>
-        </div>
-        <div>
-             {{ $store.state.counter }}
-        </div>
-        <div>
-            <strong>{{random}}</strong>random
-        </div>
-        <a href="#" @click.prevent="history($data, $event)" >history</a>
+        <h1>dev</h1>
+        <section>
+             <h2>단어강조</h2>
+            <span v-html="searchStart ? getSearchContents( '카드종류 현대 현대카드' , '현대', 'title') : search.TITLE"></span>
+        </section>
 
-         <div class="infiniti">
-            <div v-for="(item, $index) in listInfiniti" :key="$index">
-                {{item.author}}
+        <section>
+            <h2>부모, 자식 이벤트 전달 테스트</h2>
+            <button type="button" @click="parentFn">
+                <span>parent</span>
+                <button type="button" @click.stop="childFn">
+                    child
+                </button>
+            </button>
+        </section>
+
+        <section>
+            <div>
+                 <h2>1개일때 true, false 로 return value 값 미선언시</h2>
+                <label>
+                    <input type="checkbox" id="checkbox" v-model="checked">
+                    <span>{{ checked }}</span>
+                </label>
             </div>
-            <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-        </div>
+            <div>
+                <h2>여러개일때 return value 값 선언</h2>
+                <input type="checkbox" id="jack" value="Jack" v-model="checkeds">
+                <input type="checkbox" id="john" value="John" v-model="checkeds">
+                <input type="checkbox" id="mike" value="Mike" v-model="checkeds">
+                 <span>{{ checkeds.length == 0 ? "" :  checkeds}}</span>
+            </div>
+        </section>
+
+        <section>
+            <h2>.exact 수식어 테스트</h2>
+            <input type="text" @keyup.ctrl.67="copy">
+        </section>
+
+        <section>
+            <h2>ref 로딩 선택시 mounted</h2>
+            <div ref="refSwiper">refSwiper</div>
+        </section>
+
+        <section>
+            <h2>line style 테스트</h2>
+            <button type="button" @click="pushdom" 
+                :style="true ? 'width:100px' : 'width: 200px;'"
+            >pushdom</button>
+        </section>
+
+        <section>
+            <h2>mixin event 테스트</h2>
+            <button type="button" @click="scroll">mixin</button>
+        </section>
+
+
+        <section>
+            <h2>복수 라디오 테스트</h2>
+            <input type="radio" value="A" v-model="random" >
+            <input type="radio" value="B" v-model="random">
+            <input type="radio" value="C" v-model="random">
+            <input type="radio" value="D" v-model="random">
+        </section>
+        <a href="#" @click.prevent="history($data, $event)" >history</a>
+        <section>
+            <h2>컴포넌트 이벤트 전달 및 slot 테스트</h2>
+            <div >
+                <input type="number" v-model.number="count" />
+            </div>
+            <common-btn :count="count" @child="parents">
+                <div slot="header">여기에 페이지 제목이 위치합니다</div>
+                <div slot-scope="props">
+                    {{ props.text }} footer slot
+                </div>
+            </common-btn>
+        </section>
+
+        <section>
+             <h2>axios 테스트</h2>
+            <button type="button" @click="axiosFn">axios</button>
+            <div v-if="list">
+                <ul>
+                    <template v-for="(list, index) in list">
+                        <li :key="index + list.node_id">
+                            {{list.author}}
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+             <h2>vuex store Test</h2>
+            <div>
+                {{ $store.state.counter }}
+            </div>
+        </section>
+
+        <section>
+            <h2>history Test</h2>
+            <div>
+                <strong>{{random}}</strong>random
+            </div>
+        </section>
+        
+        <section>
+            <h2>무한스크롤링 페이징 테스트</h2>
+            <div class="infiniti">
+                <div v-for="(item, $index) in listInfiniti" :key="$index">
+                    {{item.author}}
+                </div>
+                <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+            </div>
+        </section>
 
         <div class="swiper-container">
             <div class="swiper-wrapper">
@@ -104,8 +166,9 @@ export default {
             page: 1,
             listInfiniti: [],
             checked: false,
+            checkeds: [],
             searchStart: true,
-            list: {
+            search: {
                 TITLE : "list TITLE"
             }
         };
@@ -208,7 +271,7 @@ export default {
             const _this = this;
             this.$axios.get('https://hn.algolia.com/api/v1/search_by_date?tags=story&page=1')
             .then(function (response) {
-               _this.list = response.data;
+               _this.list = response.data.hits;
             })
             .catch(function (error) {
                 console.log(error);
@@ -237,7 +300,6 @@ export default {
             console.log("copy")
         },
         infiniteHandler($state) {
-            console.log("infiniteHandler");
             const _this = this;
             this.$axios.get('//hn.algolia.com/api/v1/search_by_date?tags=story', {
                 params: {
@@ -284,6 +346,24 @@ export default {
 
         div {
             line-height: 30px;
+        }
+    }
+
+    h1 {
+        font: {
+            size: 18px;
+        }
+    }
+
+    section {
+        margin-bottom: 30px;
+        padding: 30px 0;
+        background: #cdcdcd;
+
+        h2{
+            font: {
+                size: 16px;
+            }
         }
     }
 }

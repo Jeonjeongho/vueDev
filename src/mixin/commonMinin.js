@@ -69,7 +69,8 @@ const commonMixin = {
                 };
             });
 
-            console.log(_data)
+            console.log(_data);
+            console.log("_data");
 
 
 
