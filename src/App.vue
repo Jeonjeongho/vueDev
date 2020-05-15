@@ -133,7 +133,7 @@ export default {
             console.log(history.state);
             // console.log("history");
         };
-
+        this.$readyHistory(this.$next);
         // this.$readyHistory(() => {
         //     if(!history.state || performance.navigation.type == 1) {
         //         this.randomFn();
@@ -156,6 +156,10 @@ export default {
         parents(data) {
             console.log(data + "parents");
             this.count = data;
+        },
+
+        $next() {
+            console.log("next");
         },
 
         pushdom() {
@@ -201,7 +205,7 @@ export default {
                         this.listInfiniti.push(...data.hits);
                         $state.loaded();
                         
-                            
+                              
                     } else {
                         $state.complete();
                     }
