@@ -48,7 +48,7 @@
         </section>
 
         <section>
-            <h2>.exact 수식어 테스트</h2>
+            <h2>.exact 수식어 테스트 ctrl + c</h2>
             <input type="text" @keyup.ctrl.67="copy">
         </section>
 
