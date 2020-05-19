@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HtmlWebpackInlineSourcePlugin = require("html-webpack-inline-source-plugin");
 
 const getPages = function() {
-	console.log("1234");
+	//console.log("1234");
 };
 getPages();
 module.exports = {

@@ -14,6 +14,16 @@
                 <strong>{{random}}</strong>random
             </div>
         </section>
+        
+        <section>
+            <h2>무한스크롤링 페이징 테스트</h2>
+            <div class="infiniti">
+                <div v-for="(item, $index) in listInfiniti" :key="$index">
+                    {{item.author}}
+                </div>
+                <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+            </div>
+        </section>
 
         <section>
              <h2>단어강조</h2>
@@ -109,18 +119,6 @@
              <h2>vuex store Test</h2>
             <div>
                 {{ $store.state.counter }}
-            </div>
-        </section>
-
-       
-        
-        <section>
-            <h2>무한스크롤링 페이징 테스트</h2>
-            <div class="infiniti">
-                <div v-for="(item, $index) in listInfiniti" :key="$index">
-                    {{item.author}}
-                </div>
-                <infinite-loading @infinite="infiniteHandler"></infinite-loading>
             </div>
         </section>
 
