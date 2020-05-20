@@ -166,8 +166,8 @@ import wNumb from "wnumb";
 import commonMixin from "./mixin/commonMinin.js";
 import commonBtn from "./components/commonBtn.vue";
 import InfiniteLoading from 'vue-infinite-loading';
-import {EventBus} from "./bus/event-bus"
-
+import {EventBus} from "./bus/event-bus";
+import URLSearchParams from '@ungap/url-search-params'
 export default {
     name: "App",
     mixins: [commonMixin],
@@ -257,13 +257,14 @@ export default {
         //         console.log(history.state);
         //     }
         // })
+
     },
     mounted: function() {
         this.pushdom();
         this.swiper();
         this.zoom();
         this.noUiSliderFn();
-        
+        this.urlSearch();
         // this.$nextTick(function() {
         //     this.getHistory = false;
         // });
@@ -271,6 +272,15 @@ export default {
         //console.log("mounted");
     },
     methods: {
+
+        getQueryString() {
+			return new URLSearchParams(window.location.search);
+        },
+        
+        urlSearch() {
+            //http://localhost:8080/?test=search
+            console.log(this.getQueryString().get("test"));
+        },
 
         getSearchContents(word, filter, type) {
             const regex = new RegExp(filter,'gi');
@@ -329,7 +339,7 @@ export default {
         },
 
         $next() {
-            console.log("next");
+            //console.log("next");
         },
 
         pushdom() {
