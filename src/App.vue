@@ -38,6 +38,7 @@
                 <input type="text" v-model="price.min" /> ~ 
                 <input type="text" v-model="price.max" />
                 <div ref="slider"></div>
+                <button type="button" @click="filter">Btn</button>
             </div>
         </section>
 

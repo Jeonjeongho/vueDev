@@ -1,5 +1,6 @@
 import {EventBus} from "../bus/event-bus";
 import * as _ from "lodash";
+import wNumb from "wnumb";
 
 const commonMixin = {
     data : function() {
@@ -97,6 +98,15 @@ const commonMixin = {
         $readyHistory(fn) {
             this.$nextTick(fn);
         },
+
+        filter() {
+            const  moneyFormat = wNumb({
+                thousand: ',',
+            });
+
+            console.log(moneyFormat.from(this.price.min));
+            console.log(moneyFormat.from(this.price.max));
+        }
     }
 };
 
