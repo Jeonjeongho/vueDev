@@ -26,6 +26,13 @@
         </section>
 
         <section>
+            <h2>js-image-zoom</h2>
+            <div ref="img-container" style="width: 400px; margin: 0 auto;">
+                <img src="http://malaman.github.io/js-image-zoom/example/1.jpg" width="100%"/>
+            </div>
+        </section>
+
+        <section>
              <h2>단어강조</h2>
             <span v-html="searchStart ? getSearchContents( '카드종류 현대 현대카드' , '현대', 'title') : search.TITLE"></span>
         </section>
@@ -142,7 +149,8 @@
 </template>
 
 <script>
-import Swiper from "swiper"
+import Swiper from "swiper";
+import ImageZoom from "js-image-zoom";
 import commonMixin from "./mixin/commonMinin.js";
 import commonBtn from "./components/commonBtn.vue";
 import InfiniteLoading from 'vue-infinite-loading';
@@ -226,7 +234,7 @@ export default {
     mounted: function() {
         this.pushdom();
         this.swiper();
-
+        this.zoom();
         // this.$nextTick(function() {
         //     this.getHistory = false;
         // });
@@ -248,6 +256,15 @@ export default {
                 const cutWord = word.substring(startIndex, endIndex);
                 return cutWord.replace(regex, `<span class='font-point'>${filter}</span>`);
             }
+        },
+
+        zoom() {
+            const options = {
+                width: 400,
+                zoomWidth: 400,
+                offset: {vertical: 0, horizontal: 10}
+            };
+            new ImageZoom(this.$refs["img-container"], options);
         },
         
 

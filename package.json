@@ -9,6 +9,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "js-image-zoom": "^0.7.0",
     "lodash": "^4.17.15",
     "swiper": "^5.3.8",
     "vue": "^2.6.11",
