@@ -36,14 +36,14 @@ const commonMixin = {
             //isArray
             const _data = data;
 
-            const arrayFn = (arrLength, _value, _key) => {
+            const arrayFn = (arrLength,   _value, _key) => {
                 if(arrLength == 0) return;
                 const _indexCk= arrLength - 1;
                 const _index= _value.length - arrLength;
 
                 if(Array.isArray(_value[_index])) {
                     return arrayFn(_value[_index].length, _value[_index], _key);
-                } else {
+                } else {  
                     if(_value[_value.length - arrLength].nodeType == 1 || this.historyIgnore.indexOf(_value[_value.length - arrLength].constructor.name) >= 0) {
                         delete _data[_key];
                     } else {

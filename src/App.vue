@@ -33,6 +33,15 @@
         </section>
 
         <section>
+            <h2>nouislider</h2>
+            <div style="width: 400px; margin: 0 auto; border: 1px solid #ccc;">
+                <input type="text" v-model="price.min" /> ~ 
+                <input type="text" v-model="price.max" />
+                <div ref="slider"></div>
+            </div>
+        </section>
+
+        <section>
              <h2>단어강조</h2>
             <span v-html="searchStart ? getSearchContents( '카드종류 현대 현대카드' , '현대', 'title') : search.TITLE"></span>
         </section>
@@ -151,6 +160,8 @@
 <script>
 import Swiper from "swiper";
 import ImageZoom from "js-image-zoom";
+import noUiSlider from "nouislider";
+import wNumb from "wnumb";
 import commonMixin from "./mixin/commonMinin.js";
 import commonBtn from "./components/commonBtn.vue";
 import InfiniteLoading from 'vue-infinite-loading';
@@ -180,6 +191,16 @@ export default {
             searchStart: true,
             search: {
                 TITLE : "list TITLE"
+            },
+            
+            defaultPrice: {
+                min: "0",
+                max: "10,000",
+            },
+
+            price: {
+                min: "0",
+                max: "10,000",
             }
         };
     },
@@ -220,6 +241,11 @@ export default {
             this.randomFn();
         } else {
             console.log(history.state);
+
+            this.$nextTick(function() {
+                //this.noUiSliderFn();
+            });
+            
             // console.log("history");
         };
         this.$readyHistory(this.$next);
@@ -235,6 +261,8 @@ export default {
         this.pushdom();
         this.swiper();
         this.zoom();
+        this.noUiSliderFn();
+        
         // this.$nextTick(function() {
         //     this.getHistory = false;
         // });
@@ -256,6 +284,32 @@ export default {
                 const cutWord = word.substring(startIndex, endIndex);
                 return cutWord.replace(regex, `<span class='font-point'>${filter}</span>`);
             }
+        },
+
+        noUiSliderFn() {
+            const $target = this.$refs["slider"];
+            const  moneyFormat = wNumb({
+                thousand: ',',
+            });
+
+
+            noUiSlider.create($target, {
+                start: [moneyFormat.from(this.price.min), moneyFormat.from(this.price.max)],
+                range: {
+                    'min': [moneyFormat.from(this.defaultPrice.min)],
+                    'max': [moneyFormat.from(this.defaultPrice.max)]
+                },
+                format: wNumb({
+                    decimals: 3,
+                    thousand: ',',
+                })
+            });
+
+            $target.noUiSlider.on('update', (values, handle) => {
+                this.price.min = values[0].split(".")[0];
+                this.price.max = values[1].split(".")[0];
+                //console.log(handle == "0" ? "min" : "max");
+            });
         },
 
         zoom() {
@@ -348,6 +402,7 @@ export default {
 
 <style lang="scss">
 @import '../node_modules/swiper/css/swiper.css';
+@import '../node_modules/nouislider/distribute/nouislider.min.css';
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
