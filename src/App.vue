@@ -26,9 +26,19 @@
         </section>
 
         <section>
-            <h2>js-image-zoom</h2>
-            <div ref="img-container" style="width: 400px; margin: 0 auto;">
-                <img src="http://malaman.github.io/js-image-zoom/example/1.jpg" width="100%"/>
+            <div>
+                 <h2>1개일때 true, false 로 return value 값 미선언시</h2>
+                <label>
+                    <input type="checkbox" id="checkbox" v-model="checked">
+                    <span>{{ checked }}</span>
+                </label>
+            </div>
+            <div>
+                <h2>여러개일때 return value 값 선언</h2>
+                <input type="checkbox" id="jack" value="케어" v-model="checkeds">
+                <input type="checkbox" id="john" value="물티슈" v-model="checkeds">
+                <input type="checkbox" id="mike" value="데일리" v-model="checkeds">
+                 <span>{{ checkeds.length == 0 ? "" :  checkeds}}</span>
             </div>
         </section>
 
@@ -58,19 +68,9 @@
         </section>
 
         <section>
-            <div>
-                 <h2>1개일때 true, false 로 return value 값 미선언시</h2>
-                <label>
-                    <input type="checkbox" id="checkbox" v-model="checked">
-                    <span>{{ checked }}</span>
-                </label>
-            </div>
-            <div>
-                <h2>여러개일때 return value 값 선언</h2>
-                <input type="checkbox" id="jack" value="Jack" v-model="checkeds">
-                <input type="checkbox" id="john" value="John" v-model="checkeds">
-                <input type="checkbox" id="mike" value="Mike" v-model="checkeds">
-                 <span>{{ checkeds.length == 0 ? "" :  checkeds}}</span>
+            <h2>js-image-zoom</h2>
+            <div ref="img-container" style="width: 400px; margin: 0 auto;">
+                <img src="http://malaman.github.io/js-image-zoom/example/1.jpg" width="100%"/>
             </div>
         </section>
 
@@ -202,7 +202,8 @@ export default {
             price: {
                 min: "0",
                 max: "10,000",
-            }
+            },
+            url: "",
         };
     },
     beforeCreate: function() {
@@ -230,6 +231,63 @@ export default {
                 //this.randomFn();
             },
             //immediate: true
+        },
+        checkeds: {
+            handler(newValue, oldValue) {
+                //http://localhost:8080/?f_c=1&filter%25EC%25BC%2580%25EC%2596%25B4=%25EC%25BC%2580%25EC%2596%25B4
+                const url = this.getQueryString();
+
+                if(newValue.length < oldValue.length) {
+                    for(const value of oldValue) {
+                        if(!newValue.find(e => value == e)) {
+                            url.delete("filter" + encodeURIComponent(value));
+                        }
+                    };
+                } else {
+                    for(const value of newValue) {
+                        if(!url.has("filter" + encodeURIComponent(value))) {
+                            console.log(value);
+                            url.append("filter" + encodeURIComponent(value), encodeURIComponent(value));
+                        };
+                    };
+                };
+
+
+                // for(const value of oldValue) {
+                //     console.log(value);
+                // }
+                // for(const value of newValue) {
+                //     url.append("filter" + encodeURIComponent(newValue), encodeURIComponent(newValue));
+                // };
+
+                // //url.append("filter" + newValue, encodeURIComponent(newValue));
+
+                // for(const value of oldValue) {
+                //     if(!newValue.find(e => value == e)) {
+                //         url.delete("filter" + encodeURIComponent(value));
+                //     } else {
+                //         for(var key of url.keys()) { 
+                //             //console.log(decodeURIComponent(key)); 
+                //             if(key == "filter" + encodeURIComponent(newValue)) {
+
+                //             } else {
+                //                 url.append("filter" + encodeURIComponent(newValue), encodeURIComponent(newValue));
+                //             }
+                //         }
+                //     }
+                // };
+                //console.log(this.getQueryString().get("f_c"))
+                console.log(url.toString());
+                //url.append("filter" + encodeURIComponent(newValue) , encodeURIComponent(newValue));
+                // let filterUrl = "";
+                // for(const value of newValue) {
+                //     //filterUrl += "&search=" + encodeURI(value);
+                //     filterUrl += encodeURIComponent("&search=" + value)
+                // };
+
+                //history.pushState(null, null, "?f_c=" + this.getQueryString().get("f_c") + filterUrl);
+                history.pushState(null, null,"?" + url.toString());
+            },
         }
     },
     created: function() {
@@ -279,7 +337,7 @@ export default {
         
         urlSearch() {
             //http://localhost:8080/?test=search
-            console.log(this.getQueryString().get("test"));
+            //console.log(this.getQueryString().get("test"));
         },
 
         getSearchContents(word, filter, type) {
