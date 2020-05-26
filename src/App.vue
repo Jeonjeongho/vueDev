@@ -194,7 +194,7 @@ export default {
                 TITLE : "list TITLE"
             },
             
-            defaultPrice: {
+            defaultPrice: { 
                 min: "0",
                 max: "10,000",
             },
@@ -337,7 +337,14 @@ export default {
         
         urlSearch() {
             //http://localhost:8080/?test=search
-            //console.log(this.getQueryString().get("test"));
+            //http://localhost:8080/?filter%25EC%25BC%2580%25EC%2596%25B4=%25EC%25BC%2580%25EC%2596%25B4&filter%25EB%25AC%25BC%25ED%258B%25B0%25EC%258A%2588=%25EB%25AC%25BC%25ED%258B%25B0%25EC%258A%2588
+            // console.log(this.getQueryString().get("test"));
+            for(const value of this.getQueryString().keys()) {
+                if(this.checkeds.join().indexOf(decodeURI(value).replace("filter", "")) < 0) {
+                    this.checkeds.push(decodeURI(value).replace("filter", ""));
+                }
+                //decodeURIComponent("filter%EC%BC%80%EC%96%B4");
+            }
         },
 
         getSearchContents(word, filter, type) {
