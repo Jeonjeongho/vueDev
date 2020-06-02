@@ -104,7 +104,7 @@
             <input type="radio" value="C" v-model="random">
             <input type="radio" value="D" v-model="random">
         </section>
-        <a href="#" @click.prevent="history($data, $event)" >history</a>
+        <!-- <a href="#" @click.prevent="history($data, $event)" >history</a> -->
         <section>
             <h2>컴포넌트 이벤트 전달 및 slot 테스트</h2>
             <div >
@@ -344,7 +344,7 @@ export default {
                     this.checkeds.push(decodeURI(value).replace("filter", ""));
                 }
                 //decodeURIComponent("filter%EC%BC%80%EC%96%B4");
-            }
+            }//모베이스전자 1,550  에스티큐브 11,400 
         },
 
         getSearchContents(word, filter, type) {
@@ -435,8 +435,20 @@ export default {
             console.log(this.random)
         },
 
+        
+
         storeFn() {
-            //console.log(this.$store.dispatch('addCounter'))
+            // console.log("storeFn");
+            // this.$store.dispatch('addCounter', {
+            //     data: {
+            //         KF : "94"
+            //     }
+            // });
+            this.$store.dispatch({
+                type: 'addCounter',
+                KF: 94
+            });
+            this.parentFn();
         },
 
         parentFn() {
@@ -448,7 +460,7 @@ export default {
         },
 
         copy() {
-            console.log("copy")
+            console.log("copy");
         },
         infiniteHandler($state) {
             const _this = this;
@@ -463,7 +475,7 @@ export default {
                         this.listInfiniti.push(...data.hits);
                         $state.loaded();
                         
-                              
+                               
                     } else {
                         $state.complete();
                     }

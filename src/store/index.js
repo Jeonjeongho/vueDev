@@ -8,8 +8,23 @@ export default new Vuex.Store({
     counter: "counter"
   },
   mutations: {
+    delCounter(state, payload) {
+        console.log(payload + "payload");
+    }
   },
   actions: {
+    delCounter(context, ob) {
+      console.log(ob);
+      context.commit("delCounter", ob);
+    },
+
+    addCounter({ commit, state, dispatch }, products) {
+      console.log(products);
+      dispatch("delCounter", products);
+
+    },
+
+
   },
   modules: {
   }
