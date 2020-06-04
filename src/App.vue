@@ -9,14 +9,14 @@
         <router-view></router-view>
 
          <section>
-            <h2>history Test</h2>
+            <h2 v-customerColor:color="'red'">history Test</h2>
             <div>
                 <strong>{{random}}</strong>random
             </div>
         </section>
         
         <section>
-            <h2>무한스크롤링 페이징 테스트</h2>
+            <h2 v-customerColor="'blue'">무한스크롤링 페이징 테스트</h2>
             <div class="infiniti">
                 <div v-for="(item, $index) in listInfiniti" :key="$index">
                     {{item.author}}
@@ -439,15 +439,23 @@ export default {
 
         storeFn() {
             // console.log("storeFn");
-            // this.$store.dispatch('addCounter', {
-            //     data: {
-            //         KF : "94"
-            //     }
-            // });
-            this.$store.dispatch({
-                type: 'addCounter',
-                KF: 94
+            this.$store.dispatch('addCounter', {
+                data: {
+                    KF : "94"
+                }
             });
+
+            this.$store.dispatch('product/addCounter', {
+                data: {
+                    KF : "98"
+                }
+            });
+
+
+            // this.$store.dispatch({
+            //     type: 'addCounter',
+            //     KF: 94
+            // });
             this.parentFn();
         },
 

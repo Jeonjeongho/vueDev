@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import product from './product.js'
 
 Vue.use(Vuex)
 
@@ -19,7 +20,7 @@ export default new Vuex.Store({
     },
 
     addCounter({ commit, state, dispatch }, products) {
-      console.log(products);
+      console.log(products + "products Test");
       dispatch("delCounter", products);
 
     },
@@ -27,5 +28,6 @@ export default new Vuex.Store({
 
   },
   modules: {
+    product
   }
 })
