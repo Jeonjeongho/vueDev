@@ -13,10 +13,13 @@ import detail from './pages/shop/detail.vue';
 
 Vue.use(VueRouter);
 Vue.directive('customerColor', {
-  bind(el, binding, vnode) {
+  bind(el, binding, vnode) { 
     el.style.backgroundColor = 'green';
     console.log(binding)
   },
+  unbind(el, binding, vnode) {
+    console.log(el);
+  }
 });
 
 export const router = new VueRouter({
