@@ -147,7 +147,7 @@
             <div class="swiper-slide">Slide 4</div>
             <div class="swiper-slide">Slide 5</div>
             <div class="swiper-slide">Slide 6</div>
-            <div class="swiper-slide">Slide 7</div>
+            <div class="swiper-slide">Slide 7</div> 
             <div class="swiper-slide">Slide 8</div>
             <div class="swiper-slide">Slide 9</div>
             <div class="swiper-slide">Slide 10</div>
@@ -433,6 +433,16 @@ export default {
             //this.getHistory = false;
             this.random = Math.floor(Math.random() * 10) + 1;
             console.log(this.random)
+
+            this.$axios.get('http://localhost:8080/test.json?page=12312312312123123123123')
+            .then(function (response) {
+               console.log("test 12312312");
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+            console.log("로컬테스트!!");
         },
 
         
